@@ -1,0 +1,149 @@
+# HTML Structure
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            <button id="clear">C</button>
+            <button id="delete">DEL</button>
+            <button id="equals">=</button>
+            <button id="zero">0</button>
+            <button id="one">1</button>
+            <button id="two">2</button>
+            <button id="three">3</button>
+            <button id="four">4</button>
+            <button id="five">5</button>
+            <button id="six">6</button>
+            <button id="seven">7</button>
+            <button id="eight">8</button>
+            <button id="nine">9</button>
+            <button id="add">+</button>
+            <button id="subtract">-</button>
+            <button id="multiply">*</button>
+            <button id="divide">/</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+```
+
+# CSS Styling (in styles.css file)
+```
+.calculator {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#display {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 24px;
+    text-align: right;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+
+button {
+    height: 40px;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
+```
+
+# JavaScript Functionality (in script.js file)
+```
+const display = document.getElementById('display');
+const clearButton = document.getElementById('clear');
+const deleteButton = document.getElementById('delete');
+const equalsButton = document.getElementById('equals');
+const numberButtons = document.querySelectorAll('#zero, #one, #two, #three, #four, #five, #six, #seven, #eight, #nine');
+const operatorButtons = document.querySelectorAll('#add, #subtract, #multiply, #divide');
+
+let currentNumber = '';
+let previousNumber = '';
+let currentOperator = '';
+
+numberButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        currentNumber += button.textContent;
+        display.value = currentNumber;
+    });
+});
+
+operatorButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        if (currentNumber !== '') {
+            previousNumber = currentNumber;
+            currentNumber = '';
+            currentOperator = button.textContent;
+        }
+    });
+});
+
+equalsButton.addEventListener('click', () => {
+    if (currentNumber !== '' && previousNumber !== '') {
+        let result;
+        switch (currentOperator) {
+            case '+':
+                result = parseFloat(previousNumber) + parseFloat(currentNumber);
+                break;
+            case '-':
+                result = parseFloat(previousNumber) - parseFloat(currentNumber);
+                break;
+            case '*':
+                result = parseFloat(previousNumber) * parseFloat(currentNumber);
+                break;
+            case '/':
+                result = parseFloat(previousNumber) / parseFloat(currentNumber);
+                break;
+            default:
+                result = 0;
+        }
+        display.value = result;
+        currentNumber = '';
+        previousNumber = '';
+        currentOperator = '';
+    }
+});
+
+clearButton.addEventListener('click', () => {
+    display.value = '';
+    currentNumber = '';
+    previousNumber = '';
+    currentOperator = '';
+});
+
+deleteButton.addEventListener('click', () => {
+    currentNumber = currentNumber.slice(0, -
+```
